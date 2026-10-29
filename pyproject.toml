@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vnedu-cot"
+version = "1.0.0"
+description = "Benchmark of behavioural dependence on displayed reasoning in Vietnamese educational problems"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+dependencies = [
+  "httpx>=0.27",
+  "numpy>=2.0",
+  "openpyxl>=3.1",
+  "pydantic>=2.10",
+  "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy>=1.13",
+  "pytest>=8.3",
+  "ruff>=0.8",
+  "types-openpyxl>=3.1",
+]
+
+[project.scripts]
+vnedu-cot = "vnedu_cot.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vnedu_cot"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "src"
+files = [
+  "src/vnedu_cot",
+  "tests/test_intervention.py",
+  "tests/test_intervention_integration.py",
+]

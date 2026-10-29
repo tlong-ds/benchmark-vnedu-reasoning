@@ -1,0 +1,16 @@
+%=====================================================================
+% Shared packages and macros. Included by every venue variant.
+% Nothing venue-specific belongs in this file.
+%=====================================================================
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{amsmath}
+
+% Placeholder macro. Every \PH{...} must be resolved before submission.
+% Find them all with:  grep -n "PH{" body.tex
+\newcommand{\PH}[1]{\textcolor{red}{\textbf{[#1]}}}
+
+% Camera-ready switch: uncomment the line below to make any surviving
+% placeholder impossible to miss in the final PDF check, or replace the
+% definition with \newcommand{\PH}[1]{} to strip them entirely.
+% \renewcommand{\PH}[1]{\textcolor{red}{\framebox{\textbf{UNRESOLVED: #1}}}}

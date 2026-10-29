@@ -1,0 +1,11 @@
+# Primary benchmark model (Native R1 Reasoning, pinned to DeepInfra)
+model_id = "deepseek/deepseek-r1-0528"
+provider = "DeepInfra"
+model_name = "DeepSeek R1"
+model_version = "r1-0528"
+access_tier = "tier_1_full_control"
+api_gateway = "openrouter"
+measurement_mode = "sampling"
+temperature = 0.0
+max_output_tokens = 8192
+allow_fallbacks = false

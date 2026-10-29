@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+*.egg-info/
+.DS_Store
+
+# Secrets: API keys go in .env, never in the repository.
+.env
+.envrc
+
+# New intervention runs are written here; the analysed draws are tracked.
+outputs/interventions/*
+!outputs/interventions/deepseek-r1/
+templates/itemwriter_workbook.xlsx
+
+# Working file from scripts/make_canonical_template.py
+outputs/canonical_chains_template.jsonl

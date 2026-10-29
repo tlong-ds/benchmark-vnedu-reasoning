@@ -1,0 +1,123 @@
+\subsection{Benchmark Coverage and Quality Checks}
+\label{sec:coverage}
+
+The candidate pool comprises 216 items (72 triplets) across four educational levels. Eighteen candidate triplets were withheld because a base chain missed the gold answer or failed generation, format, or answer-parsing checks, leaving 162 executed items in 54 complete triplets (54 per problem type; 42 each at primary, secondary, high school; 36 university). Each item has 20 records per arm: 9,720 generations (9,707 parseable answers, 13 unparseable responses retained in denominators). Protocol diagnostics flag 270 records lacking native reasoning content (66 clean, 123 placebo, 81 corrupted); 140 items have no flagged record in any arm (``protocol-complete''; 38 triplets have all three items complete). A language audit of the 9,450 continuations with reasoning content finds all of them predominantly Vietnamese (none English; 4 contain a few isolated English words). Across the six abstract inference schemas ($n=8\text{--}10$ triplets each), descriptive dependence ranges from \SFourCDE\% in S4 to \SOneCDE\% in S1 and S3 (Table~\ref{tab:schemas}). Blinded paired human ratings cover all 162 corrupted prefixes and 162 placebo comparisons (3 clean catch false alarms in 58 judgments, 5.2\%). Both raters confirmed meaning preservation for 122/162 placebos (19 rejected by both, 21 split). The primary effect remains on the subset passing all paired human screens ($\cde = 12.1$\,pp, 95\% CI [8.2, 16.6]), indicating that disputed placebo rewrites do not explain the result.
+
+\subsection{Primary Corruption-Dependence Estimates}
+
+\begin{table}[!htb]\centering\small\setlength{\tabcolsep}{2.5pt}
+\caption{Propagation rates, corrupted-versus-placebo effects ($\cde$), and overall non-gold rates on the executed items (54 triplets, 162 items, 9,720 draws). CIs are percentage points from whole-triplet resampling (10,000 replicates).}
+\label{tab:preliminary}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule Problem type & Placebo & Corrupted & $\cde$ (95\% CI) & Non-gold (Corr.) \\
+\midrule
+Computational & 0.0\% & 8.8\% & 8.8 [3.4, 15.2] & 9.4\% \\
+Theoretical & 0.0\% & 10.4\% & 10.4 [5.0, 16.6] & 13.4\% \\
+History/literature & 0.0\% & 13.4\% & 13.4 [6.8, 20.8] & 13.6\% \\
+\midrule
+All items & 0.0\% & 10.9\% & 10.9 [7.3, 14.8] & 12.2\% \\
+\bottomrule\end{tabular}
+\end{table}
+
+\begin{table}[!htb]\centering\small\setlength{\tabcolsep}{2pt}
+\caption{$\cde$ (percentage points) by abstract inference schema. Placebo propagation is zero in every schema, so $\cde$ equals the corrupted propagation rate.}
+\label{tab:schemas}
+\begin{tabular}{@{}lrrr@{}}
+\toprule Schema & Triplets & Propagating draws & $\cde$ (95\% CI) \\
+\midrule
+S1 & 8 & 84/480 & 17.5 [6.7, 32.1] \\
+S2 & 9 & 37/540 & 6.9 [1.9, 12.6] \\
+S3 & 8 & 84/480 & 17.5 [7.3, 28.5] \\
+S4 & 10 & 22/600 & 3.7 [0.0, 10.2] \\
+S5 & 10 & 46/600 & 7.7 [1.7, 15.0] \\
+S6 & 9 & 79/540 & 14.6 [6.3, 24.4] \\
+\bottomrule\end{tabular}
+\end{table}
+
+Table~\ref{tab:preliminary} shows that the pooled corrupted-versus-placebo effect is 10.9 percentage points (95\% CI: [7.3, 14.8]; 352/3,240 corrupted vs.\ 0/3,240 placebo, 5/3,240 clean). The placebo--clean contrast $\editdiff$ (Eq.~\ref{eq:edit}) is $-0.15$\,pp (95\% CI: [$-0.5$, $0.0$]), so rewording alone has almost no effect (rule-of-three bound $\approx 0.09\%$). Non-gold answers occur in \NonGoldCleanPct\% clean, \NonGoldPlaceboPct\% placebo, and \NonGoldCorruptedPct\% corrupted draws.
+
+Propagation is concentrated in few items: \ItemsZeroProp\ of 162 items (\ItemsZeroPropPct\%) exhibit zero propagation across all 20 draws, \ItemsPartialProp\ items (\ItemsPartialPropPct\%) show partial propagation (1--19 draws), and exactly \ItemsFullProp\ item (\ItemsFullPropPct\%) propagates in all 20 draws (within-item intraclass correlation $\text{ICC}_{\text{item}} = \ItemICC$, design effect $\text{DEFF} = 1 + 19\,\text{ICC}_{\text{item}} = \DesignEffect$, within-triplet $\text{ICC}_{\text{triplet}} = \TripletICC$). Between computational and history/\allowbreak literature problems, the unadjusted paired within-triplet contrast is $-4.6$\,pp (95\% CI: [$-14.3$, $5.0$]); theoretical vs.\ history is $-3.1$\,pp (95\% CI: [$-11.8$, $5.1$]); contrasts use unrounded rates. Point estimates reverse the hypothesized H1 ordering (history 13.4\% > theoretical 10.4\% > computation 8.8\%), though both contrast intervals span zero. The effect holds on stricter subsets (Table~\ref{tab:subsets}): its interval excludes zero on the 140 protocol-complete items, on the 117 items passing all paired human screens, and on the 88 items that are human-screened, protocol-complete and pass the knowledge probes.
+
+\begin{table}[!htb]\centering\small\setlength{\tabcolsep}{3pt}
+\caption{$\cde$ (percentage points) on stricter subsets, with whole-triplet bootstrap intervals. ``Complete'' means protocol-complete. ``Human-screened'' requires both raters to judge the corruption detectable and answer-relevant and to confirm placebo meaning preservation.}
+\label{tab:subsets}
+\begin{tabular}{@{}lrr@{}}
+\toprule Subset & Items & $\cde$ (95\% CI) \\
+\midrule
+All executed items & 162 & 10.9 [7.3, 14.8] \\
+Protocol-complete & 140 & 10.4 [6.5, 14.9] \\
+Human-screened & 117 & 12.1 [8.2, 16.6] \\
+Human-screened, complete, probes passed & 88 & 13.4 [8.3, 19.0] \\
+\bottomrule\end{tabular}
+\end{table}
+
+\subsection{Answer-Only Accuracy and Problem Type}
+\label{sec:answeronlyresults}
+
+\begin{table}[!htb]\centering\small\setlength{\tabcolsep}{1.8pt}
+\caption{Answer-only accuracy $q_i$ and corruption dependence $\cde$ (percentage points). $\beta_q$ is the change in item-level corrupted propagation (pp) per unit $q_i$ with triplet cluster-robust SEs ($G=54$): the pooled slope is from a model with problem-type indicators, type slopes are within-type. Strata are descriptive; $p$ tests the slope.}
+\label{tab:difficulty}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule & & \multicolumn{2}{c}{Slope on $q_i$} & \multicolumn{3}{c}{$\cde$ by $q_i$ stratum ($n$)} \\
+\cmidrule(lr){3-4}\cmidrule(l){5-7}
+Problem type & $q_i$ & $\beta_q$ (SE) & $p$ & $\ge$.85 & .60--.85 & $<$.60 \\
+\midrule
+Computational & 69.8\% & $-29.4$ (14.9) & 0.053 & 3.7 (23) & 7.9 (17) & 18.2 (14) \\
+Theoretical & 76.1\% & $-30.2$ (18.4) & 0.107 & 8.4 (22) & 6.8 (25) & 29.3 (7) \\
+History/literature & 81.7\% & $+8.3$ (10.1) & 0.413 & 12.3 (28) & 17.6 (21) & 2.0 (5) \\
+\midrule
+All items & 75.9\% & $-20.7$ (9.5) & 0.033 & 8.4 (73) & 10.7 (63) & 18.1 (26) \\
+\bottomrule\end{tabular}
+\end{table}
+
+Answer-only accuracy $q_i$ uses an empty thinking block ($k_{\mathrm{AO}}=10$ cyclic option rotations on all 216 items; 2,160 draws with no native reasoning tokens, confirmed via usage metadata). Mean accuracy on executed items is \MeanQi\% (vs.\ \DroppedMeanQi\% on the 54 withheld items), and computational items have the lowest accuracy (Table~\ref{tab:difficulty}).
+
+{\emergencystretch=2em In exploratory regression, answer-only accuracy is negatively associated with corruption dependence overall ($\beta_q = \BetaQ$\,pp per unit $q_i$, $p = \BetaQClusterPval$). The omnibus $q_i \times \text{type}$ interaction is not significant ($\chi^2(2) = 5.19$, $p = 0.075$; computational interaction uncorrected $p = 0.033$, Bonferroni $p = 0.066$; theoretical uncorrected $p = 0.119$, Bonferroni $p = 0.238$), so the slopes by problem type in Table~\ref{tab:difficulty} are not statistically distinguishable. Adding the answer-only rate of choosing the propagation option (mean \MeanPropAO\%) as a covariate changes little ($\beta = 1.46$, $p = 0.933$).\par}
+
+Stratifying by $q_i$ is descriptive and not a test of differences between problem types. On computational and theoretical items, high-accuracy items propagate rarely and low-accuracy items more often, while history/literature shows no such gradient: even high-accuracy history items propagate at 12.3\%, and the low-accuracy history stratum has only five items. Adjusting for $q_i$ shifts both contrasts with history further negative (computational vs.\ history: \AdjustedCompDiff\,pp, 95\% CI [$-16.3, 2.1$]; theoretical vs.\ history: \AdjustedTheoDiff\,pp, 95\% CI [$-12.9, 4.4$]; both span zero), so H1 is not recovered.
+
+\subsection{Knowledge Probes and Rater Detectability}
+\label{sec:probesresults}
+
+Knowledge probes (Section~\ref{sec:probes}) were run for every item that has external premises. Forty-four computational items need no external facts and pass the probes by construction. Of the 118 items that do, the model recalls every probed fact for \ProbedPassCount\ items (\ProbedPassPct\%: 9/10 computation, 43/54 theoretical, 38/54 history/literature; 134/162 overall; 15 empty responses count as failures). Failing items show $\cde = 10.5\%$ ($n=28$) vs.\ $13.4\%$ for passing ones ($n=90$). Items requiring external factual recall propagate at about twice the rate of self-contained items (12.8\% vs.\ 5.8\%); within computational items alone, 10 external-load items propagate at 22.0\% (95\% CI [2.5, 46.0]) vs.\ 5.8\% for 44 zero-load items (95\% CI [1.6, 11.2]). Since zero-load items are all computational, this is descriptive; adjusting for $q_i$ and problem type (identified within computational items) gives $\beta_{\mathrm{ext}} = +15.0$\,pp ($\mathrm{SE} = 10.2, p = 0.147$, spanning zero). 
+
+Detectability (0--5) averages $3.73$ (SD $1.06$) with a similar spread in every problem type, and shows negligible correlation with $\cde$ ($r = -0.096$). This check is limited by modest rater severity agreement ($\kappa_w = 0.28$, Eq.~\ref{eq:kappa}). Quadratic weights penalise large score gaps more than small ones. As Table~\ref{tab:raters} shows, 78\% of score pairs differ by at most one point, but Rater~1 scores higher on average (4.06 vs.\ 3.41) and the raters correlate only weakly ($r = 0.35$). Detectability is therefore a coarse covariate, and its null association with $\cde$ is weak evidence, not proof of no relation.
+
+\begin{table}[!htb]\centering\small\setlength{\tabcolsep}{4pt}
+\caption{Agreement between the two raters on corruption detectability. Counts are prefixes.}
+\label{tab:raters}
+\begin{tabular}{@{}lr@{}}
+\toprule Detectability (0--5), 162 prefixes & Value \\
+\midrule
+Identical scores & 62 \\
+Differ by one point & 65 \\
+Differ by two or more points & 35 \\
+Rater 1 scores higher / lower & 82 / 18 \\
+Mean score, Rater 1 / Rater 2 & 4.06 / 3.41 \\
+Pearson $r$ & 0.35 \\
+Quadratic-weighted $\kappa_w$ & 0.282 \\
+\bottomrule\end{tabular}
+\end{table}
+
+\subsection{Behavioural Continuation Breakdown}
+
+\begin{table}[!htb]\centering\small\setlength{\tabcolsep}{4pt}
+\caption{Outcomes of the 3,240 corrupted-arm draws. Repair and doubt are rule-based lexical flags (see text for their precision and recall).}
+\label{tab:behaviour}
+\begin{tabular}{@{}lrr@{}}
+\toprule Corrupted-arm outcome & Draws & Share \\
+\midrule
+Gold answer & 2,846 & 87.8\% \\
+\quad silent override (no repair marker) & 2,109 & 74.1\% of gold \\
+\quad explicit repair marker & 737 & 25.9\% of gold \\
+Propagation answer & 352 & 10.9\% \\
+\quad no overt doubt & 343 & 97.4\% of propagation \\
+\quad doubt expressed & 9 & 2.6\% of propagation \\
+Other option & 29 & 0.9\% \\
+Unparseable & 13 & 0.4\% \\
+\midrule
+Total & 3,240 & 100\% \\
+\bottomrule\end{tabular}
+\end{table}
+
+Table~\ref{tab:behaviour} splits the corrupted draws. Across the 2,846 gold returns, \GoldSilentOverridePct\% (\GoldSilentOverrideCount\ draws) are classified by the lexical audit as \emph{silent override}: no error-repair marker. On 76 human-rated continuations from a mixed-type calibration sample, the corpus keyword classifier has precision/recall 0.65/0.50 (Rater~1) and 0.47/0.47 (Rater~2); adjusting the flag rate by precision/recall gives explicit repair $\approx 26\%$--$34\%$, so the raw \GoldExplicitRepairPct\% sits at the low end of that range and silent override is $\approx 66\%$--$74\%$ (still the majority). Conditioning on gold returns, silent override dominates on high-$q_i$ items ($q_i \ge 0.85$, 77.6\%, $n=1{,}034/1{,}333$), whereas apparent explicit repair (descriptive) rises on low-$q_i$ items ($q_i < 0.60$, 31.1\%, $n=131/421$) and low-$q_i$ quantitative items (35.0\%, $n=113/323$). However, because verification keywords (\vn{\emph{tính lại}}, \vn{\emph{xét lại}}) concentrate in arithmetic tasks, this apparent quantitative rise may partly reflect recalculation false alarms rather than true behavioral correction. The conflict lexicon used for the propagation returns is narrow and unvalidated.

@@ -1,0 +1,22 @@
+{
+  "id": "gen-test-step4",
+  "model": "deepseek/deepseek-r1-0528",
+  "provider": "DeepInfra",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "message": {
+        "reasoning": "4. Đối chiếu kết quả vừa tính với các phương án để chọn đáp án phù hợp.",
+        "reasoning_details": [{"type": "reasoning.text", "text": "4. Đối chiếu kết quả."}],
+        "content": "Phần giải thích cuối cùng nhắc lại kết luận.\n\nĐáp án: C"
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 100,
+    "completion_tokens": 30,
+    "completion_tokens_details": {"reasoning_tokens": 18},
+    "cost": 0.00042
+  }
+}
+

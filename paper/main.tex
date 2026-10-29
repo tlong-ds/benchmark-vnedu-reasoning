@@ -1,0 +1,101 @@
+\documentclass[sigconf,review]{acmart}
+
+\usepackage[T5,T1]{fontenc}
+\usepackage{needspace}
+\newcommand{\vn}[1]{{\fontencoding{T5}\fontfamily{qtm}\selectfont #1}}
+
+
+
+\newcommand{\TODO}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+\newcommand{\cde}{\Delta_{\mathrm{CDE}}}
+\AtBeginDocument{% tighter float spacing around tables
+  \setlength{\floatsep}{6pt plus 2pt minus 2pt}
+  \setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+  \setlength{\intextsep}{8pt plus 2pt minus 2pt}
+  \setlength{\abovecaptionskip}{4pt}
+  \setlength{\belowcaptionskip}{0pt}}
+\newcommand{\editdiff}{\Delta_{\mathrm{edit}}}
+\input{analysis/numbers}
+
+\makeatletter
+\@ACM@balancefalse
+\makeatother
+\setlength{\bibsep}{0pt}
+
+\acmConference[ICIIT 2027]{2027 12th International Conference on Intelligent Information Technology}{March 4--7, 2027}{Ho Chi Minh City, Vietnam}
+\acmBooktitle{Proceedings of the 2027 12th International Conference on Intelligent Information Technology (ICIIT 2027), March 4--7, 2027, Ho Chi Minh City, Vietnam}
+\acmDOI{10.1145/nnnnnnn.nnnnnnn}
+\acmISBN{978-x-xxxx-xxxx-x/YY/MM}
+\acmYear{2027}
+\copyrightyear{2027}
+
+\settopmatter{printacmref=true}
+\pagestyle{plain}
+
+\title{Does Displayed Reasoning Drive the Answer? A Diagnostic Benchmark for Vietnamese Educational Reasoning}
+
+\author{Thanh Long Ly}
+\email{11230561@st.neu.edu.vn}
+\affiliation{%
+  \institution{National Economics University}
+  \city{Hanoi}
+  \country{Vietnam}
+}
+
+\author{Thi Huyen Trang Duong}
+\email{11230593@st.neu.edu.vn}
+\affiliation{%
+  \institution{National Economics University}
+  \city{Hanoi}
+  \country{Vietnam}
+}
+
+\author{Hoang Phuc Ngo}
+\email{11230582@st.neu.edu.vn}
+\affiliation{%
+  \institution{National Economics University}
+  \city{Hanoi}
+  \country{Vietnam}
+}
+
+\author{Manh Toan Nguyen}
+\authornote{Corresponding author.}
+\email{toannm36@fe.edu.vn}
+\affiliation{%
+  \institution{Swinburne Vietnam, FPT University}
+  \country{Vietnam}
+}
+
+\begin{abstract}
+Large language models increasingly assist Vietnamese learners, yet a fluent displayed rationale need not determine the final answer. We introduce a Vietnamese benchmark measuring behavioural dependence on displayed reasoning across computational, theoretical, and history/\allowbreak literature problem types. The candidate pool contains 72 matched triplets (216 items) across four education levels. For DeepSeek-R1-0528 under an unfinished-\textnormal{\textless{}think\textgreater{}} continuation protocol, we compare continuation from clean, placebo-edited, and corrupted step-3 prefixes. Across 162 executed items (54 triplets; 9,720 generations), corrupted step-3 reasoning increases error propagation by \CDEpp\ percentage points (95\% bootstrap CI [\CDECILow, \CDECIHigh], excluding zero), while placebo rewriting induces 0.0\% propagation. In exploratory regression, higher answer-only accuracy is associated with lower propagation (pooled cluster-robust $\beta_q = -20.7$\,pp per unit $q_i$, $p = 0.033$, uncorrected); slopes by problem type are not statistically distinguishable (omnibus $p = 0.075$). Auditing continuations across all 2,846 corrupted gold returns indicates that keyword-based silent override dominates (\GoldSilentOverridePct\% by keyword audit; $\approx 66\%$--$74\%$ after calibration), with explicit repair $\approx 26\%$--$34\%$. Failing the factual-prerequisite probes was not associated with more propagation (10.5\% vs.\ 13.4\%), although items needing external facts propagated more often than self-contained ones (descriptive, confounded with problem type). Data and code are available at {\def\UrlBreaks{\do\/}\def\UrlBigBreaks{\do\/}\url{https://github.com/tlong-ds/benchmark-vnedu-reasoning}}.
+\end{abstract}
+
+\begin{CCSXML}
+<ccs2012>
+  <concept>
+      <concept_id>10010147.10010178.10010179</concept_id>
+      <concept_desc>Computing methodologies~Natural language processing</concept_desc>
+      <concept_significance>500</concept_significance>
+  </concept>
+  <concept>
+      <concept_id>10010405.10010489</concept_id>
+      <concept_desc>Applied computing~Education</concept_desc>
+      <concept_significance>500</concept_significance>
+  </concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Computing methodologies~Natural language processing}
+\ccsdesc[500]{Applied computing~Education}
+
+\keywords{chain-of-thought, reasoning faithfulness, AI tutoring, Vietnamese benchmark, large language models}
+
+\begin{document}
+\maketitle
+
+\input{body}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{refs}
+
+\end{document}

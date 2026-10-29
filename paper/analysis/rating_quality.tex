@@ -1,0 +1,17 @@
+Human agreement uses paired corrupted-prefix and placebo ratings across all 162 executed items, evaluated independently by two raters under blinded evaluation protocols. Raters saw only the rating sheets, never model outputs; the ratings did not determine inclusion in the 162-item primary analysis or change any outcome label.
+
+Quadratic-weighted detectability $\kappa_w$ is 0.282 (62 exact matches and 35 differences of at least two points). For binary answer relevance across 160 valid pairs (2 pairs contain missing/not-applicable relevance where detectability was rated zero), raw observed agreement is 96.88\% (155/160: 153 two-positive, 2 two-negative, and 5 conflicting pairs). Due to the high-prevalence paradox \citep{feinstein1990high}, where 97.2\% of marginal ratings are positive, Cohen's $\kappa$ is suppressed to 0.429; prevalence-adjusted measures confirm high concordance (PABAK $= \RelevancePABAK$, Gwet's $\text{AC}_1 = \RelevanceGwet$).
+
+Placebo reviews have 162 paired human ratings ($\kappa=0.568$, observed agreement 87.04\%): 122 two-positive, 19 two-negative, and 21 conflicting pairs. A separate pool of 29 clean catch stimuli has 58 judgments and 3 false alarms (5.2\%). Catches are excluded from corruption agreement.
+
+\begin{table}[t]\centering\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule Problem type & $n$ & $\kappa_{\rm severity}$ & $\kappa_{\rm relevance}$ \\
+\midrule
+Computational & 54 & 0.285 & 0.486 \\
+Theoretical & 54 & 0.293 & --- \\
+History/literature & 54 & 0.265 & 0.381 \\
+\bottomrule\end{tabular}
+\caption{Agreement on corrupted-chain ratings across all 162 items. A dash indicates undefined $\kappa$ when both reviews are constant. Raw detectability distributions appear in Appendix~\ref{app:severity}.}
+\label{tab:agreement}\end{table}
+Two positive detectability/relevance judgments plus two positive placebo reviews select 117 items (25 complete triplets); adding protocol completeness and probe success leaves 88 items (13 complete triplets). These review-based sets are sensitivity subsets (Appendix~\ref{app:sensitivity}), not the principal diagnostic sample or adjudicated scores.

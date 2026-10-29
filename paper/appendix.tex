@@ -1,0 +1,147 @@
+\section{Rating Protocol Summary}
+\label{app:rating}
+
+Human review comprises three distinct protocols, each serving a separate methodological role:
+(i)~\emph{Pre-intervention chain rating}: Evaluates the question, answer options, and prefix through step~3 (without step~4 or model continuations) to assess whether corrupted and salted clean catch stimuli exhibit detectable reasoning defects (0--5 detectability) and whether the error necessitates a shifted final answer (binary answer relevance). Zero denotes no detected error, including on corrupted stimuli.
+(ii)~\emph{Placebo equivalence review}: Independently compares the original clean step~3 against its rewritten variant to verify meaning preservation (yes/no), ensuring the paraphrase does not alter logical assertions, factual scope, or intermediate conclusions.
+(iii)~\emph{Post-intervention disclosure evaluation}: Conducted separately on generated continuations to score explicit error acknowledgment and repair (0--3), providing ground-truth human calibration for automated disclosure judging without influencing pre-intervention chain validity.
+
+\section{Concrete Matched Triplet Stimulus Example}
+\label{app:example}
+
+Table~\ref{tab:triplet_example} illustrates a canonical item (\texttt{S1-HS-01-MATH}, High School, Sequential Dependence S1) showing the original prompt, balanced options, and the three controlled step-3 prefix conditions alongside their expected continuation answers.
+
+\begin{table*}[t]\small
+\centering
+\begin{tabular}{@{}lp{0.85\textwidth}@{}}
+\toprule
+\textbf{Component} & \textbf{Content (\texttt{S1-HS-01-MATH}, High School, Sequential Dependence S1)} \\
+\midrule
+\textbf{Question} & A customer purchases imported goods via an e-commerce platform with a customs-declared value of 800,000 VND. The import duty is 20\% of the declared value. A fixed, untaxed customs handling fee is 300,000 VND. What is the total amount the customer must pay? \\
+& \emph{Vietnamese stem: ``\vn{Một khách hàng đặt mua lô hàng qua sàn TMĐT có giá trị khai báo 800.000 đồng...}''} \\
+\midrule
+\textbf{Options} & \textbf{A [Gold]}: 1,260,000 VND \quad \textbf{B}: 1,100,000 VND \quad \textbf{C [Propagation]}: 1,320,000 VND \quad \textbf{D}: 960,000 VND \\
+\midrule
+\textbf{Step 1 (Retrieval)} & Declared value: 800,000 VND; duty rate: 20\%; fixed customs handling fee: 300,000 VND. \\
+\textbf{Step 2 (Inference)} & Total payment = Goods declared value + Import duty + Fixed handling fee. \\
+\midrule
+\textbf{Step 3: Clean} & Import duty = $800,000 \times 20\% = 160,000$ VND. Component costs are 800,000 VND goods, 160,000 VND duty, and 300,000 VND handling fee. $\implies$ \textbf{Continues to A (Gold: 1,260,000 VND)} \\
+\textbf{Step 3: Placebo} & Applying the 20\% duty rate to the declared value gives $800,000 \times 20\% = 160,000$ VND; the other components are unchanged. $\implies$ \textbf{Continues to A (Gold: 1,260,000 VND)} \\
+\textbf{Step 3: Corrupted} & Import duty is calculated as 20\% on the combined sum of goods and handling fee: $(800,000 + 300,000) \times 20\% = 220,000$ VND. $\implies$ \textbf{Continues to C (Propagation: 1,320,000 VND)} \\
+\bottomrule
+\end{tabular}
+\caption{Canonical stimulus demonstration on \texttt{S1-HS-01-MATH}. Steps 1--2 establish the shared deductive framework; Step 3 manipulates logic while Step 4 is generated under unconstrained continuation. The matched theoretical science item (\texttt{S1-HS-01-CHEM}: identifying the excess reactant from molar ratios) and history item (\texttt{S1-HS-01-HIS}: determining which political event causally triggered a subsequent one) share the S1 sequential dependence schema with identical step-type sequence and manipulation position.}
+\label{tab:triplet_example}
+\end{table*}
+
+\section{Run-Level Data Schema}
+\label{app:schema}
+
+Each intervention generation stores its draw/item/chain identifiers, item version, arm, draw index, seed, requested and served model/provider, decoding settings, supplied prefix, generated continuation, visible response, parsed option, gold and propagation options, usage metadata, hashes, and protocol diagnostics. Triplet, problem type, level, and schema are joined from item metadata; they need not be duplicated in every draw row. Language compliance is checked with a rule-based classifier (Vietnamese diacritics and function words vs.\ English words) across all 9,450 non-empty continuations: 9,446 are Vietnamese, 4 are Vietnamese with a few isolated English words (e.g., ``option, ``substitution), and none is English. The stored fields permit reconstruction of cell-level answer probabilities and checks for duplicate draws.
+
+\section{Rating Agreement}
+\label{app:consolidation}
+
+Agreement is calculated from the two independent human raters' scores across all 162 executed items in \url{ratings/rated/}. Missing/not-applicable relevance is excluded from binary agreement, not converted to a negative judgment. Clean catch trials form a separate pool, excluded from corruption-severity agreement; their false-alarm rate counts positive detectability judgments.
+
+\input{analysis/rating_quality}
+
+\Needspace{12\baselineskip}
+\section{Detectability Distributions}
+\label{app:severity}
+
+\input{analysis/severity_table}
+
+\section{Additional Sensitivity Analyses}
+\label{app:sensitivity}
+
+\input{analysis/sensitivity}
+
+\section{Exploratory Disclosure Ratings}
+\label{app:disclosure}
+
+\input{analysis/disclosure_quality}
+
+\subsection*{Lexical Audit Validation}
+\label{app:lexical_audit}
+
+The 90-item Job~B disclosure calibration subset (28 computational, 30 theoretical, 32 history/literature by problem type) contains 76 corrupted continuations and 14 clean controls. On these continuations, the corpus keyword classifier (regex list) flags 17/76 draws. Against Rater~1 (positive, $n=22/76$) it has precision~$=0.65$, recall~$=0.50$; against Rater~2 (positive, $n=17/76$), precision~$=0.47$, recall~$=0.47$. The broader package classifier flags 40/76 (precision/recall 0.40/0.73 and 0.33/0.76) and flags 60.9\% of the corpus. Adjusting the flag rate by precision/recall gives explicit repair $\approx 26\%$--$34\%$ under either classifier, so the corpus rate (\GoldExplicitRepairPct\% explicit repair, \GoldSilentOverridePct\% silent override) is roughly unbiased, with silent override $\approx 66\%$--$74\%$. Because verification keywords concentrate in arithmetic tasks, apparent rises in explicit repair on difficult quantitative problems may reflect recalculation density rather than true behavioral correction.
+
+
+
+\section{Multivariable Interaction and Difficulty Moderation}
+\label{app:interaction}
+
+Table~\ref{tab:interaction_regression} presents the cluster-robust multivariable regression model ($G=54$ triplets) testing whether direct answerability ($q_i$) moderates corruption dependence ($\cde$) differently across problem types.
+
+\begin{table}[t]\small
+\centering
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Variable & Coef ($\beta$) & Cluster SE & $t$-stat & $p$-value \\
+\midrule
+Constant (History intercept) & $+6.63$ & 8.53 & $+0.78$ & 0.440 \\
+$q_i$ (History slope) & $+8.32$ & 10.08 & $+0.82$ & 0.413 \\
+Computation dummy & $+22.68$ & 14.60 & $+1.55$ & 0.126 \\
+Theoretical dummy & $+26.70$ & 19.55 & $+1.37$ & 0.178 \\
+$q_i \times \text{Computation}$ & $-37.70$ & 17.24 & $-2.19$ & 0.033 \\
+$q_i \times \text{Theoretical}$ & $-38.49$ & 24.31 & $-1.58$ & 0.119 \\
+\bottomrule
+\end{tabular}
+\caption{Cluster-robust regression of $\cde$ on $q_i$ and domain interaction terms ($G=54$ triplet clusters). The computation interaction has uncorrected $p = 0.033$ but is not significant after Bonferroni correction ($p = 0.066$) or by the omnibus test ($\chi^2(2)=5.19$, $p = 0.075$).}
+\label{tab:interaction_regression}
+\end{table}
+
+\section{Execution Assembly and Audit}
+\label{app:assembly}
+
+The unified diagnostic assembly covers 162 items in 54 structurally complete triplets, yielding 9,720 records with all 20 scheduled draws per arm across clean, placebo, and corrupted conditions. All items adhere to the identical experimental protocol: three-arm continuation sampling ($k=20$ draws each under deterministic seeds), automated constraint checks, and paired independent human review (corruption severity/relevance and placebo equivalence). No individual draws are selected on outcome.
+
+Every unparseable answer remains in its 20-draw denominator as non-propagation (13 records across 9,720 draws). The broad diagnostic estimate retains records with minor protocol flags (the native-reasoning check flags 270 draws lacking reasoning tokens from premature \textnormal{\textless{}think\textgreater{}} closure: 66 clean, 123 placebo, 81 corrupted), while a protocol-complete sensitivity removes entire items failing the 20-valid-draws-per-arm requirement. Bootstrap samples select whole triplets, preserving all arms and members. Machine-readable aggregate statistics, per-item counts, and anonymized checksums accompany the analysis. Paired independent human agreement covers all 162 executed items across both corruption-severity and placebo-equivalence evaluations.
+
+\section{Schema-Level Corruption Dependence}
+\label{app:schemas}
+
+Table~\ref{tab:schema_cde} reports $\cde$ stratified by abstract inference schema, with whole-triplet bootstrap confidence intervals (10,000 resamples, seed 20261013).
+
+\begin{table}[t]\small\centering\setlength{\tabcolsep}{2pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Schema & Items & Triplets & $\cde$ & 95\% CI \\
+\midrule
+S1 Sequential dependence & 24 & 8 & \SOneCDE\% & [\SOneCILow, \SOneCIHigh] \\
+S2 Necessary $\to$ sufficient & 27 & 9 & \STwoCDE\% & [\STwoCILow, \STwoCIHigh] \\
+S3 Elimination over closed set & 24 & 8 & \SThreeCDE\% & [\SThreeCILow, \SThreeCIHigh] \\
+S4 Causal attribution & 30 & 10 & \SFourCDE\% & [\SFourCILow, \SFourCIHigh] \\
+S5 Comparison (1 variable) & 30 & 10 & \SFiveCDE\% & [\SFiveCILow, \SFiveCIHigh] \\
+S6 Simultaneous constraints & 27 & 9 & \SSixCDE\% & [\SSixCILow, \SSixCIHigh] \\
+\bottomrule
+\end{tabular}
+\caption{$\cde$ by abstract inference schema. Descriptively, the range across schemas (3.7\%--17.5\%) is wider than across problem types (8.8\%--13.4\%); schema CIs overlap substantially. CIs from whole-triplet bootstrap (10,000 replicates).}
+\label{tab:schema_cde}
+\end{table}
+
+
+\section{Knowledge Probes and Factual Grounding}
+\label{app:probes}
+
+Knowledge probes evaluate standalone factual recall of external premises required to solve the benchmark questions but omitted from the problem stem. Table~\ref{tab:probe_outcomes} summarizes focal-model factual competence across problem types.
+
+\begin{table}[t]\vspace{-1ex}
+\centering\small\setlength{\tabcolsep}{1.5pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Problem type & Items & Zero-load & Probed & Grounding \\
+\midrule
+Computational & 54 & 44 & 10 & 98.1\% (53/54) \\
+Theoretical & 54 & 0 & 54 & 79.6\% (43/54) \\
+History/literature & 54 & 0 & 54 & 70.4\% (38/54) \\
+\midrule
+Total & 162 & 44 & 118 & 82.7\% (134/162) \\
+\bottomrule
+\end{tabular}
+\caption{Factual premise recall performance of the focal model across problem types.}
+\label{tab:probe_outcomes}
+\end{table}
+
+44 of 54 computational items carry zero external knowledge load (100\% grounding by construction); the remaining 10 are probed. Across items requiring external factual recall, the model demonstrates high grounding in physical formulas ($p = \rho g h$), stoichiometry ($1:1$ ratio for $\text{SO}_2$ and $\text{Br}_2$), biological transport, and historical milestones (August 1945 general uprising). Substantive errors concentrate in granular humanities memorization (colonial decrees, modern poetry lines); 15 further probes received empty responses and are counted as failures. Failing items do not propagate more than passing ones ($\cde$ 10.5\% vs.\ 13.4\%). Free-text probe answers were graded by an LLM judge (\texttt{deepseek/deepseek-chat}; 6 judge failures were overturned by expert audit). An independent second grading of all 258 focal-model probe answers found no wrong non-empty answer accepted by the judge; an item passes only if every one of its probes is judged correct.

@@ -1,0 +1,17 @@
+# DeepSeek-R1 native-reasoning intervention: 162 chains x 3 arms x 20 draws.
+protocol_id = "deepseek-r1-intervention"
+schema_version = "2.0"
+model = "deepseek/deepseek-r1-0528"
+gateway = "openrouter"
+provider = "DeepInfra"
+allow_fallbacks = false
+samples_per_arm = 20
+temperature = 0.7
+top_p = 1.0
+reasoning_effort = "high"
+max_output_tokens = 8192
+arms = ["clean", "placebo", "corrupted"]
+concurrency = 3
+rating_key = "data/intervention_chain_ids.jsonl"
+corrupted_chains = "data/corrupted_chains.jsonl"
+items = "data/items.jsonl"
